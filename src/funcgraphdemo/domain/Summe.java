@@ -1,9 +1,11 @@
 package funcgraphdemo.domain;
 
 import funcgraphdemo.common.Calculation;
+import funcgraphdemo.common.DependsOn;
 import funcgraphdemo.common.ValueProvider;
 import java.util.List;
 
+@DependsOn(Stichprobe.class)
 public class Summe implements Calculation<ValueProvider, Double> {
 
     @Override
