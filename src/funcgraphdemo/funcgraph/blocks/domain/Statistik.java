@@ -19,12 +19,12 @@ public class Statistik extends Block<funcgraphdemo.domain.Statistik> {
 
     @Override
     protected funcgraphdemo.domain.Statistik calculate(Scope scope) {
-        statistik.stichprobe = scope.get(Stichprobe.class).getOutput();
-        statistik.summe = scope.get(Summe.class).getOutput();
-        statistik.varianz = scope.get(Varianz.class).getOutput();
-        statistik.stdabw = scope.get(StdAbw.class).getOutput();
-        statistik.mittelwert = scope.get(Mittelwert.class).getOutput();
-        statistik.anzahl = scope.get(Anzahl.class).getOutput();
+        statistik.stichprobe = scope.get(Stichprobe.class);
+        statistik.summe = scope.get(Summe.class);
+        statistik.varianz = scope.get(Varianz.class);
+        statistik.stdabw = scope.get(StdAbw.class);
+        statistik.mittelwert = scope.get(Mittelwert.class);
+        statistik.anzahl = scope.get(Anzahl.class);
         return statistik;
     }
 }

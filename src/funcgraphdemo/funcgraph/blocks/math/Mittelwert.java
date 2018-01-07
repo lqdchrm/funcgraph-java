@@ -11,8 +11,8 @@ public class Mittelwert extends Block<Double> {
     
     @Override
     protected Double calculate(Scope scope) {
-        Double summe = scope.get(Summe.class).getOutput();
-        Long anzahl = scope.get(Anzahl.class).getOutput();
+        Double summe = scope.get(Summe.class);
+        Long anzahl = scope.get(Anzahl.class);
         
         return summe / anzahl;
     }

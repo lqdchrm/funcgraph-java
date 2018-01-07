@@ -13,7 +13,7 @@ public class Summe extends Block<Double>{
     
     @Override
     protected Double calculate(Scope scope) {
-        List<Double> stichprobe = scope.get(Stichprobe.class).getOutput();
+        List<Double> stichprobe = scope.get(Stichprobe.class);
         return stichprobe.stream().reduce(0.0, (a,b) -> a+b);
     }
 }

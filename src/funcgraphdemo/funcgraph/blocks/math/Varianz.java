@@ -13,8 +13,8 @@ public class Varianz extends Block<Double> {
 
     @Override
     protected Double calculate(Scope scope) {
-        List<Double> stichprobe = scope.get(Stichprobe.class).getOutput();
-        Double mittelwert = scope.get(Mittelwert.class).getOutput();
+        List<Double> stichprobe = scope.get(Stichprobe.class);
+        Double mittelwert = scope.get(Mittelwert.class);
         
         int n = stichprobe.size();
         double result = stichprobe.stream()
@@ -22,6 +22,5 @@ public class Varianz extends Block<Double> {
                 .reduce(0.0, (a,b) -> a + b)                         // summe
                 / n;                                                 // durch anzahl
         return result;
-    }   
-    
+    }
 }
