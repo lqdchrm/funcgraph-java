@@ -23,7 +23,7 @@ class Block<OUTPUT> {
         markSuccessorsDirty();
     }
 
-    private final void markSuccessorsDirty() {
+    private void markSuccessorsDirty() {
         for (Block b : scope.getSuccessors(this)) {
             b.dirty = true;
             b.markSuccessorsDirty();
@@ -46,8 +46,8 @@ class Block<OUTPUT> {
         
         return String.format("%s:\n\tDepends on: %s\n\tUsed by: %s\n\tUpdateCount: %d\n\tOutput:%s",
                 this.calc.getClass().getName(),
-                (pre != null && pre.size() > 0) ? pre.stream().map(b -> b.getClass().getName()).collect(Collectors.joining(",")) : "",
-                (suc != null && suc.size() > 0) ? suc.stream().map(b -> b.getClass().getName()).collect(Collectors.joining(",")) : "",
+                (pre != null && pre.size() > 0) ? pre.stream().map(b -> b.calc.getClass().getName()).collect(Collectors.joining(",")) : "",
+                (suc != null && suc.size() > 0) ? suc.stream().map(b -> b.calc.getClass().getName()).collect(Collectors.joining(",")) : "",
                 updateCount,
                 get().toString());
     }
