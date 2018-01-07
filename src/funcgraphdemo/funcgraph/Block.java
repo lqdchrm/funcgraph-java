@@ -4,42 +4,27 @@ import funcgraphdemo.common.Calculation;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public abstract class Block<OUTPUT> implements Calculation<Scope, OUTPUT> {
+class Block<OUTPUT> {
 
     private final Scope scope;
-    private final Collection<? extends Block> inputs;
+    protected final Calculation<Scope, OUTPUT> calc;
     private OUTPUT result;
 
-    private boolean dirty = true;
+    protected boolean dirty = true;
     private int updateCount = 0;
 
-    public Block(Scope scope, Class<? extends Block>... inputs) {
+    public Block(Scope scope, Calculation<Scope, OUTPUT> calc) {
         this.scope = scope;
-        this.inputs = this.scope.mapInputs(inputs);
-
-        // add type
-        this.scope.add(this);
+        this.calc = calc;
     }
-
-    protected final Collection<? extends Block> getInputs() {
-        return inputs;
-    }
-
-    public final Collection<? extends Block> dependsOn() {
-        return getInputs();
-    }
-
-    public final Collection<? extends Block> usedBy() {
-        return this.scope.getSuccessorsFor(this);
-    }
-
+    
     protected final void set(OUTPUT value) {
         this.result = value;
         markSuccessorsDirty();
     }
 
-    private void markSuccessorsDirty() {
-        for (Block b : usedBy()) {
+    private final void markSuccessorsDirty() {
+        for (Block b : scope.getSuccessors(this)) {
             b.dirty = true;
             b.markSuccessorsDirty();
         }
@@ -47,21 +32,22 @@ public abstract class Block<OUTPUT> implements Calculation<Scope, OUTPUT> {
 
     protected final OUTPUT get() {
         if (this.result == null || this.dirty) {
-            this.result = calculate(this.scope);
+            this.result = this.calc.calculate(scope);
             ++this.updateCount;
             this.dirty = false;
         }
         return this.result;
     }
 
-    public abstract OUTPUT calculate(Scope scope);
-
     @Override
     public final String toString() {
+        Collection<Block<?>> pre = this.scope.getPredecessors(this);
+        Collection<Block<?>> suc = this.scope.getSuccessors(this);
+        
         return String.format("%s:\n\tDepends on: %s\n\tUsed by: %s\n\tUpdateCount: %d\n\tOutput:%s",
-                this.getClass().getName(),
-                dependsOn().stream().map(b -> b.getClass().getName()).collect(Collectors.joining(",")),
-                usedBy().stream().map(b -> b.getClass().getName()).collect(Collectors.joining(",")),
+                this.calc.getClass().getName(),
+                (pre != null && pre.size() > 0) ? pre.stream().map(b -> b.getClass().getName()).collect(Collectors.joining(",")) : "",
+                (suc != null && suc.size() > 0) ? suc.stream().map(b -> b.getClass().getName()).collect(Collectors.joining(",")) : "",
                 updateCount,
                 get().toString());
     }
