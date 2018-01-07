@@ -10,9 +10,9 @@ public class StdAbw extends Block<Double> {
     }
 
     @Override
-    protected Double calculate(Block... inputs) {
-        Varianz varianz = (Varianz)inputs[0];
-        return Math.sqrt(varianz.getOutput());
+    protected Double calculate(Scope scope) {
+        Double varianz = scope.get(Varianz.class).getOutput();
+        return Math.sqrt(varianz);
     }
     
 }
