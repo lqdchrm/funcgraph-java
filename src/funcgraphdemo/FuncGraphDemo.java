@@ -19,13 +19,13 @@ public class FuncGraphDemo {
         funcgraphdemo.domain.Statistik statistik = new funcgraphdemo.domain.Statistik();
         
         Scope scope = new Scope();
-        
+                
         // create domain object wrappers
         new Stichprobe(scope, stichprobe);
         new Statistik(scope, statistik);
 
         // get domain object back from scope, this triggers the calculation
-        statistik = scope.get(Statistik.class).getOutput();
+        statistik = scope.get(Statistik.class);
         
         System.out.println(statistik);
         System.err.println(scope);
@@ -50,7 +50,7 @@ public class FuncGraphDemo {
         new Statistik(scope, statistik);
 
         // get domain object back from scope, this triggers the calculation
-        statistik = scope.get(Statistik.class).getOutput();
+        statistik = scope.get(Statistik.class);
         
         System.out.println(statistik);
         System.err.println(scope);
@@ -74,7 +74,7 @@ public class FuncGraphDemo {
         new Statistik(scope, statistik);
 
         // get domain object back from scope, this triggers the calculation
-        statistik = scope.get(Statistik.class).getOutput();
+        statistik = scope.get(Statistik.class);
         
         System.err.println("\n\nSystem State before change:\n********");
         System.err.println(scope);
@@ -82,10 +82,10 @@ public class FuncGraphDemo {
         // change content of domain data object
         stichprobe.add(10.0);
         stichprobe.add(11.0);
-        scope.get(Stichprobe.class).setOutput(stichprobe);  // set changed value to trigger recalc of dependent blocks
+        scope.set(Stichprobe.class, stichprobe);  // set changed value to trigger recalc of dependent blocks
         
         // get domain object back from scope, this triggers the calculation
-        statistik = scope.get(Statistik.class).getOutput();
+        statistik = scope.get(Statistik.class);
 
         System.err.println("\n\nSystem State after change:\n********");
         System.err.println(scope);
