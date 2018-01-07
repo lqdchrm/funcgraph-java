@@ -5,9 +5,9 @@ This repo demonstrates a simple FunctionGraph-Framework.
 
 Feature                                                | Status | Umgesetzt durch
 ------------------------------------------------------:|:------:|:-------------------------------------------------------------------
-Entkopplung DomainObjekte / Framework                  | N      |
+Entkopplung DomainObjekte / Framework                  | Y      | Interface für ValueProvider
 Automatisches Management der Abhängigkeiten            | Y      | Scope ist Block-Registry
 Minimale (Neu)-Berechnung von Objekten                 | Y      | Blocke speichern Results und tracken Change durch Dirty-Flag
 Sichtbarkeit der Abhängigkeiten zur Laufzeit/Debugging | Y      | Blocke speichern Abhängigkeiten
 Minimaler Code-Change bei Änderung von Abhängigkeiten  | Y      | Blöcke sind self-contained
-Level an "exotischem" Code                             | 2      | Konstruktor definiert Abhängigkeiten
+Level an "exotischem" Code                             | 0      | kein exotischer Code
