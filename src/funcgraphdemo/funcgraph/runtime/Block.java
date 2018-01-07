@@ -1,13 +1,12 @@
 package funcgraphdemo.funcgraph.runtime;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 public abstract class Block<OUTPUT> {
     
     private final Scope scope;
-    private final Collection<Block> inputs;  
+    private final Collection<? extends Block> inputs;  
     private OUTPUT result;
     
     private boolean dirty = true;
@@ -15,26 +14,18 @@ public abstract class Block<OUTPUT> {
     
     public Block(Scope scope, Class<? extends Block>... inputs) {
         this.scope = scope;
-        
-        // map the passed-in classes to block instances
-        this.inputs = Arrays.asList(inputs)
-                .stream()
-                .map(i -> scope.getUntyped(i))
-                .collect(Collectors.toList());
-
-        // TODO: cycle check
+        this.inputs = this.scope.mapInputs(inputs);
         
         // add type
         this.scope.add(this);
     }
 
-    public final Scope getScope() { return scope; }
-    protected final Collection<Block> getInputs() { return inputs; }
+    protected final Collection<? extends Block> getInputs() { return inputs; }
 
-    public final Collection<Block> dependsOn() { return getInputs(); }
-    public final Collection<Block> usedBy() { return this.scope.getSuccessorsFor(this); }
+    public final Collection<? extends Block> dependsOn() { return getInputs(); }
+    public final Collection<? extends Block> usedBy() { return this.scope.getSuccessorsFor(this); }
     
-    public final void setOutput(OUTPUT value) {
+    protected final void set(OUTPUT value) {
         this.result = value;
         markSuccessorsDirty();
     }
@@ -46,7 +37,7 @@ public abstract class Block<OUTPUT> {
         }
     }
     
-    public final OUTPUT getOutput() {
+    protected final OUTPUT get() {
         if (this.result == null || this.dirty) {
             this.result = calculate(this.scope);
             ++this.updateCount;
@@ -64,6 +55,6 @@ public abstract class Block<OUTPUT> {
                 dependsOn().stream().map(b -> b.getClass().getName()).collect(Collectors.joining(",")),
                 usedBy().stream().map(b -> b.getClass().getName()).collect(Collectors.joining(",")),
                 updateCount,
-                getOutput().toString());
+                get().toString());
     }
 }
