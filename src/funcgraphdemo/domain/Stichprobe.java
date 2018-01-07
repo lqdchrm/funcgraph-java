@@ -1,19 +1,23 @@
 package funcgraphdemo.domain;
 
+import funcgraphdemo.common.Calculation;
+import funcgraphdemo.common.ValueProvider;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.List;
 
-public class Stichprobe extends ArrayList<Double> {
+public class Stichprobe implements Calculation<ValueProvider, List<Double>> {
+
+    protected final ArrayList<Double> values;
+
     public Stichprobe() {
-        this.add(1.0);
-        this.add(2.0);
-        this.add(3.0);
+        this.values = new ArrayList<>();
+        this.values.add(1.0);
+        this.values.add(2.0);
+        this.values.add(3.0);
     }
-    
+
     @Override
-    public String toString() {
-        return this.stream()
-                .map(n -> n.toString())
-                .collect(Collectors.joining(",", "[", "]"));
+    public List<Double> calculate(ValueProvider scope) {
+        return this.values;
     }
 }
