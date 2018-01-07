@@ -1,9 +1,11 @@
 package funcgraphdemo.domain;
 
 import funcgraphdemo.common.Calculation;
+import funcgraphdemo.common.DependsOn;
 import funcgraphdemo.common.ValueProvider;
 import java.util.List;
 
+@DependsOn({Stichprobe.class, Mittelwert.class})
 public class Varianz implements Calculation<ValueProvider, Double> {
 
     @Override

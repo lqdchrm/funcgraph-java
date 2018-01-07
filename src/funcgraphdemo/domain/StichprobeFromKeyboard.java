@@ -8,6 +8,7 @@ public class StichprobeFromKeyboard extends Stichprobe {
 
     @Override
     public List<Double> calculate(ValueProvider scope) {
+        values.clear();
         System.out.println(String.format("Bitte geben Sie Zahlen ein (getrennt durch Space oder Enter):\n"));
         Scanner keyboard = new Scanner(System.in);
 
