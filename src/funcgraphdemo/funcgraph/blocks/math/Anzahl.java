@@ -14,7 +14,7 @@ public class Anzahl extends Block<Long>{
     
     @Override
     protected Long calculate(Scope scope) {
-        List<Double> stichprobe = scope.get(Stichprobe.class).getOutput();
+        List<Double> stichprobe = scope.get(Stichprobe.class);
         return stichprobe.stream().count();
     }
 }

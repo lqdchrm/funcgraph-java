@@ -1,6 +1,7 @@
 package funcgraphdemo.funcgraph.runtime;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -23,18 +24,26 @@ public final class Scope {
         
     public final TypeMap getTypeMap() { return this.typeMap; }
     
-    protected final void add(Block block) {
+    protected final void add(Block block, Class<? extends Block>... inputs) {
         if (!knownBlocks.containsKey(block.getClass())) {
             knownBlocks.put(block.getClass(), block);
         }
     }
+        
+    public final <T> T get(Class<? extends Block<T>> type) {
+        return getTyped(type).get();
+    }
     
-    public final <T> Block<T> get(Class<? extends Block<T>> type) {
+    public final <T> void set(Class<? extends Block<T>> type, T value) {
+        getTyped(type).set(value);
+    }
+    
+    private <T> Block<T> getTyped(Class<? extends Block<T>> type) {
         Block result = getUntyped(type);
         return (Block<T>)result;
     }
     
-    protected final Block getUntyped(Class<? extends Block> type) {
+    private Block getUntyped(Class<? extends Block> type) {
         if (typeMap.containsKey(type))
             type = typeMap.get(type);
         
@@ -49,7 +58,14 @@ public final class Scope {
         return knownBlocks.get(type);
     }
     
-    public final Collection<Block> getSuccessorsFor(Block block) {
+    protected final Collection<? extends Block> mapInputs(Class<? extends Block>... inputs) {
+        return Arrays.asList(inputs)
+                .stream()
+                .map(i -> getUntyped(i))
+                .collect(Collectors.toList());
+    }
+    
+    protected final Collection<Block> getSuccessorsFor(Block block) {
         return knownBlocks.values()
                 .stream()
                 .filter(b -> b.dependsOn().contains(block))
