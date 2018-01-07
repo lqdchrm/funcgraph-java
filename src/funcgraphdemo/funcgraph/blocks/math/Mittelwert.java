@@ -10,10 +10,10 @@ public class Mittelwert extends Block<Double> {
     }
     
     @Override
-    protected Double calculate(Block... inputs) {
-        Summe summe = (Summe)inputs[0];
-        Anzahl anzahl = (Anzahl)inputs[1];
+    protected Double calculate(Scope scope) {
+        Double summe = scope.get(Summe.class).getOutput();
+        Long anzahl = scope.get(Anzahl.class).getOutput();
         
-        return summe.getOutput() / anzahl.getOutput();
+        return summe / anzahl;
     }
 }

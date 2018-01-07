@@ -10,4 +10,4 @@ Automatisches Management der Abhängigkeiten            | Y      | Scope ist Blo
 Minimale (Neu)-Berechnung von Objekten                 | Y      | Blocke speichern Results und tracken Change durch Dirty-Flag
 Sichtbarkeit der Abhängigkeiten zur Laufzeit/Debugging | Y      | Blocke speichern Abhängigkeiten
 Minimaler Code-Change bei Änderung von Abhängigkeiten  | Y      | Blöcke sind self-contained
-Level an "exotischem" Code                             | 3      | viele Casts
+Level an "exotischem" Code                             | 2      | Konstruktor definiert Abhängigkeiten

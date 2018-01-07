@@ -1,7 +1,6 @@
 package funcgraphdemo.funcgraph.blocks.io;
 
 import funcgraphdemo.funcgraph.blocks.domain.Stichprobe;
-import funcgraphdemo.funcgraph.runtime.Block;
 import funcgraphdemo.funcgraph.runtime.Scope;
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ public class StichprobeFromKeyboard extends Stichprobe {
     }
 
     @Override
-    protected funcgraphdemo.domain.Stichprobe calculate(Block... inputs) {
+    protected funcgraphdemo.domain.Stichprobe calculate(Scope scope) {
         System.out.println(String.format("Bitte geben Sie Zahlen ein (getrennt durch Space oder Enter):\n"));
         Scanner keyboard = new Scanner(System.in);
         

@@ -48,14 +48,14 @@ public abstract class Block<OUTPUT> {
     
     public final OUTPUT getOutput() {
         if (this.result == null || this.dirty) {
-            this.result = calculate(this.inputs.stream().toArray(Block[]::new));
+            this.result = calculate(this.scope);
             ++this.updateCount;
             this.dirty = false;
         }
         return this.result;
     }
     
-    protected abstract OUTPUT calculate(Block... inputs);
+    protected abstract OUTPUT calculate(Scope scope);
     
     @Override
     public final String toString() {

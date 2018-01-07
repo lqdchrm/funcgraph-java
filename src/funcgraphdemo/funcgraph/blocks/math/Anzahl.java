@@ -3,6 +3,7 @@ package funcgraphdemo.funcgraph.blocks.math;
 import funcgraphdemo.funcgraph.blocks.domain.Stichprobe;
 import funcgraphdemo.funcgraph.runtime.Block;
 import funcgraphdemo.funcgraph.runtime.Scope;
+import java.util.List;
 
 
 public class Anzahl extends Block<Long>{
@@ -12,8 +13,8 @@ public class Anzahl extends Block<Long>{
     }
     
     @Override
-    protected Long calculate(Block... inputs) {
-        Stichprobe stichprobe = (Stichprobe)inputs[0];
-        return stichprobe.getOutput().stream().count();
+    protected Long calculate(Scope scope) {
+        List<Double> stichprobe = scope.get(Stichprobe.class).getOutput();
+        return stichprobe.stream().count();
     }
 }

@@ -18,14 +18,13 @@ public class Statistik extends Block<funcgraphdemo.domain.Statistik> {
     }
 
     @Override
-    protected funcgraphdemo.domain.Statistik calculate(Block... inputs) {
-        int i = 0;
-        statistik.stichprobe = ((Stichprobe)inputs[i++]).getOutput();
-        statistik.summe = ((Summe)inputs[i++]).getOutput();
-        statistik.varianz = ((Varianz)inputs[i++]).getOutput();
-        statistik.stdabw = ((StdAbw)inputs[i++]).getOutput();
-        statistik.mittelwert = ((Mittelwert)inputs[i++]).getOutput();
-        statistik.anzahl = ((Anzahl)inputs[i++]).getOutput();
+    protected funcgraphdemo.domain.Statistik calculate(Scope scope) {
+        statistik.stichprobe = scope.get(Stichprobe.class).getOutput();
+        statistik.summe = scope.get(Summe.class).getOutput();
+        statistik.varianz = scope.get(Varianz.class).getOutput();
+        statistik.stdabw = scope.get(StdAbw.class).getOutput();
+        statistik.mittelwert = scope.get(Mittelwert.class).getOutput();
+        statistik.anzahl = scope.get(Anzahl.class).getOutput();
         return statistik;
     }
 }

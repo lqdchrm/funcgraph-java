@@ -21,7 +21,7 @@ public class Stichprobe extends Block<funcgraphdemo.domain.Stichprobe>{
     }
     
     @Override
-    protected funcgraphdemo.domain.Stichprobe calculate(Block... inputs) {
+    protected funcgraphdemo.domain.Stichprobe calculate(Scope scope) {
         return this.values;
     }    
 }
