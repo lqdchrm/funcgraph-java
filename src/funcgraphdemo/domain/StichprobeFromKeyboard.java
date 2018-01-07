@@ -1,41 +1,36 @@
-package funcgraphdemo.funcgraph.blocks.io;
+package funcgraphdemo.domain;
 
-import funcgraphdemo.funcgraph.blocks.domain.Stichprobe;
-import funcgraphdemo.funcgraph.runtime.Scope;
+import funcgraphdemo.common.ValueProvider;
+import java.util.List;
 import java.util.Scanner;
 
 public class StichprobeFromKeyboard extends Stichprobe {
 
-    
-    public StichprobeFromKeyboard(Scope scope) {
-        super(scope);
-    }
-
     @Override
-    protected funcgraphdemo.domain.Stichprobe calculate(Scope scope) {
+    public List<Double> calculate(ValueProvider scope) {
         System.out.println(String.format("Bitte geben Sie Zahlen ein (getrennt durch Space oder Enter):\n"));
         Scanner keyboard = new Scanner(System.in);
-        
+
         boolean inputValid = true;
-        
-        while(inputValid && keyboard.hasNextLine()) {
+
+        while (inputValid && keyboard.hasNextLine()) {
             String line = keyboard.nextLine();
             String[] tokens = line.split(" ");
             if (tokens.length == 0) {
                 inputValid = false;
-            } else {            
-                for(String token : tokens) {
+            } else {
+                for (String token : tokens) {
                     try {
                         double value = Double.parseDouble(token);
                         values.add(value);                          // write to inherited protected field
-                    } catch(NumberFormatException ex) {
+                    } catch (NumberFormatException ex) {
                         inputValid = false;
                     }
                 }
             }
         }
-        
+
         return values;
     }
-    
+
 }
